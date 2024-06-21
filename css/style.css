@@ -1,0 +1,18 @@
+.ui.blue.basic.button:hover {
+    background-color: #2185d0 !important;
+    color: white !important;
+}
+
+.ui.red.basic.button:hover {
+    background-color: #db2828 !important;
+    color: white !important;
+}
+
+.paddingModal{
+    padding: 1rem;
+}
+
+.listar{
+    font-size: large;
+    font-weight: 800;
+}

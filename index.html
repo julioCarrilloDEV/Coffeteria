@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffeteria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.1/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="ui inverted segment">
+        <div class="ui container">
+            <div class="ui grid">
+                <div class="left floated column">
+                    <h1 class="ui inverted header">Coffeteria</h1>
+                </div>
+                <div class="right floated column">
+                    <nav class="ui secondary inverted menu">
+                        <a href="#" class="item">Produtos</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Botão adicionar -->
+    <button id="add-button" class="ui circular blue icon button" style="position: fixed; bottom: 2rem; right: 2rem;">
+        <i class="plus icon"></i>
+    </button>
+    <div class="ui grid">
+        <div class="one wide column"></div>
+        <div class="seven wide column">
+            <div class="ui left aligned">
+                <label class="listar">Listar:</label>
+                <div class="ui selection dropdown" id="categoriaDropdown">
+                    <input type="hidden" name="categoria">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Selecionar Categoria</div>
+                    <div class="menu">
+                        <div class="item" data-value="todos">Todos</div>
+                        <div class="item" data-value="bolos">Bolos</div>
+                        <div class="item" data-value="bebidas">Bebidas</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="four wide column"></div>
+        <div class="four wide column">
+            <div class="ui right aligned">
+                <div class="ui icon input" style="width: 300px;">
+                    <input type="text" id="buscaProduto" placeholder="Buscar produto...">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="ui container"  style="margin-top: 2rem;">
+        <div class="ui four doubling stackable cards special" id="conteudoCards">
+           
+        </div>
+    </div>
+    
+    <!-- Modal de adicionar novo produto -->
+    <div class="ui modal add ">
+        <i class="close icon"></i>
+        <div class="header">
+            Adicionar produto
+        </div>
+        <form class="ui form paddingModal" id="formAdd">
+            <div class="eight field ">
+                <label>Nome</label>
+                <input type="text" name="nomeAdd" id="nomeAdd" placeholder="Nome">
+            </div>
+            <div class="fields">
+                <div class="eight wide field">
+                    <label>Categoria</label>
+                    <select name="categoriaAdd" id="categoriaAdd" class="ui dropdown">
+                        <option value="">Selecione a categoria</option>
+                        <option value="1">Bolos</option>
+                        <option value="2">Bebidas</option>
+                    </select>
+                </div>
+                <div class="eight wide field">
+                    <label>Preço</label>
+                    <input type="text" name="precoAdd" id="precoAdd" placeholder="Preço do produto">
+                </div>
+            </div>
+            <div class="field">
+                <label>Link da imagem do produto</label>
+                <input type="text" name="linkAdd" id="linkAdd" placeholder="Link da imagem do produto">
+            </div>
+            <div class="field">
+                <label>Descrição</label>
+                <textarea name="descricaoAdd" id="descricaoAdd" placeholder="Descrição do produto" rows="2" maxlength="115"></textarea>
+            </div>
+        </form>
+        <div class="actions">
+            <div class="ui black deny button">
+                Cancelar
+            </div>
+            <div class="ui positive right labeled icon button disabled" id="addProduto">
+                Adicionar
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de editar produto -->
+    <div class="ui modal edit">
+        <i class="close icon"></i>
+        <div class="header">
+            Editar produto
+        </div>
+        <form class="ui form paddingModal" id="formEdit">
+            <input type="hidden" id="produtoId">
+            <div class="eight field ">
+                <label>Nome</label>
+                <input type="text" name="nomeEdit" id="nomeEdit" placeholder="Nome">
+            </div>
+            <div class="fields">
+                <div class="eight wide field">
+                    <label>Categoria</label>
+                    <select name="categoriaEdit" id="categoriaEdit" class="ui dropdown">
+                        <option value="">Selecione a categoria</option>
+                        <option value="1">Bolos</option>
+                        <option value="2">Bebidas</option>
+                    </select>
+                </div>
+                <div class="eight wide field">
+                    <label>Preço</label>
+                    <input type="text" name="precoEdit" id="precoEdit" placeholder="Preço do produto">
+                </div>
+            </div>
+            <div class="field">
+                <label>Link da imagem do produto</label>
+                <input type="text" name="linkEdit" id="linkEdit" placeholder="Link da imagem do produto">
+            </div>
+            <div class="field">
+                <label>Descrição</label>
+                <textarea name="descricaoEdit" id="descricaoEdit" placeholder="Descrição do produto" rows="2" maxlength="115"></textarea>
+            </div>
+        </form>
+        <div class="actions">
+            <div class="ui black deny button">
+                Cancelar
+            </div>
+            <div class="ui positive right labeled icon button" id="editarProduto">
+                Editar
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js" integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.1/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
